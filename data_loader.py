@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import csv
 
 
 def read_data(filename, skip_class=False, skip_header=True):
 
-    with open(filename, 'rb') as csvfile:
+    with open(filename, 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         if(skip_header):
             next(datareader)
