@@ -63,7 +63,7 @@ def k_nn(data, data_classes, k, element):
 
     results_indices = np.lexsort((results[:, 1], results[:, 0]))
 
-    print results[results_indices]
+    results[results_indices]
 
     n = np.unique(data_classes).size
     classes = np.zeros((n, 1), dtype=np.integer)
@@ -75,10 +75,10 @@ def k_nn(data, data_classes, k, element):
 
 
 k_m = 0
-k_n = 0
+k_n = 10000
 
 while(k_m < 2 or k_m >= data.shape[0] / 3):
-    k_m = raw_input("Input number of k-means:")
+    k_m = raw_input("Input number of k-means: ")
     k_m = int(k_m)
     if k_m < 2:
         print "K too small. Try k > 1"
@@ -87,10 +87,10 @@ while(k_m < 2 or k_m >= data.shape[0] / 3):
 
 new_classes = k_means(data, k_m)
 data_writer.write_data('out.data', "K-means", k_m, data, new_classes)
-print("Output of k-means written to out.data file")
+print("Output of k-Means written to out.data file")
 
 while(k_n >= data.shape[0]):
-    k_n = raw_input("Input number of k-NN:")
+    k_n = raw_input("Input number of k-NN: ")
     k_n = int(k_n)
     if k_n >= data.shape[0]:
         print "K too large. Try k < " + str(data.shape[0])
@@ -98,16 +98,19 @@ while(k_n >= data.shape[0]):
 new_element = []
 coo = 0
 
-print("Add coordinates of new element")
+print("Add coordinates of the new element")
 
 for x in range(data.shape[1]):
-    while(not isinstance(coo, float)):
-        coo = raw_input("Enter float for " + str(x) + ". coordinate:")
-        
+    coo = raw_input("Enter float for " + str(x + 1) + ". coordinate: ")
+    if coo == "":
+        coo = 0
+    coo = float(coo)    
     new_element.append(coo)
 
-new_element = np.array(new_element)
+new_element = np.array([new_element])
 new_class = k_nn(data, new_classes, k_n, new_element)
+new_class = np.array([[new_class]])
 
 data_writer.write_data('out.data', "K-NN", k_n, new_element, new_class)
 
+print("Output of k-NN written to out.data file")
