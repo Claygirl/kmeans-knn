@@ -16,7 +16,7 @@ def write_data(filename, algorithm, k, data, classes):
         f.write("\n\n")
 
 
-def write_tests(filename, algorithm, k, data, classes, org_classes):
+def write_tests(filename, algorithm, k, data, classes, org_classes, matches):
 
     with open(filename, 'w') as f:
         f.write("Output of " + algorithm + ", with k=" + str(k) + "\n\n")
@@ -24,4 +24,4 @@ def write_tests(filename, algorithm, k, data, classes, org_classes):
             f.write(str(data[x]) + " calculated class: " + str(classes[x]))
             f.write(" original class: " + str(org_classes[x]) + "\n")
 
-        f.write("\n\n")
+        f.write("\nProperly matched " + str(round(matches*100, 2)) + "% of samples\n\n")

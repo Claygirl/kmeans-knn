@@ -116,7 +116,15 @@ def k_means_test(data, means, classes, org_classes):
     for x in range(classes.shape[0]):
         new_classes[x] = mappings[classes[x]]
 
-    return (mappings, new_classes)
+    matches = 0.0
+
+    for x in range(classes.shape[0]):
+        if org_classes[x] == new_classes[x]:
+            matches += 1
+
+    matches = matches / classes.shape[0]
+
+    return (mappings, new_classes, matches)
 
 
 def interact():
@@ -137,22 +145,22 @@ def interact():
     k_m = 0
     k_n = 10000
 
-    while(k_m < 2 or k_m >= data.shape[0] / 3):
+    while(k_m < 1 or k_m > data.shape[0]):
 
         k_m = raw_input("Input number of k-means: ")
         k_m = int(k_m)
-        if k_m < 2:
-            print "K too small. Try k > 1"
-        elif k_m >= data.shape[0] / 3:
-            print "K too large. Try k < " + str(data.shape[0] / 3)
+        if k_m < 1:
+            print "K too small. Try k > 0"
+        elif k_m > data.shape[0]:
+            print "K too large. Try k <= " + str(data.shape[0])
 
     means, new_classes = k_means(data, k_m)
 
     if k_m == 3:
-        mappings, coded_classes = k_means_test(data, means, new_classes,
+        mappings, coded_classes, matches = k_means_test(data, means, new_classes,
                                                org_classes)
         data_writer.write_tests('out.data', "K-means", k_m, data,
-                                coded_classes, org_classes)
+                                coded_classes, org_classes, matches)
         print("Output of k-Means with test written to out.data file")
     else:
         data_writer.write_data('out.data', "K-means", k_m, data, new_classes)
