@@ -49,7 +49,6 @@ def k_means(data, k):
 
 
 def k_nn(data, data_classes, k, element):
-    #TODO sprawdzic k
 
     distances = np.zeros((data.shape[0], 1))
 
@@ -78,6 +77,7 @@ k_m = 0
 k_n = 10000
 
 while(k_m < 2 or k_m >= data.shape[0] / 3):
+    
     k_m = raw_input("Input number of k-means: ")
     k_m = int(k_m)
     if k_m < 2:
@@ -90,6 +90,7 @@ data_writer.write_data('out.data', "K-means", k_m, data, new_classes)
 print("Output of k-Means written to out.data file")
 
 while(k_n >= data.shape[0]):
+    
     k_n = raw_input("Input number of k-NN: ")
     k_n = int(k_n)
     if k_n >= data.shape[0]:
@@ -101,6 +102,7 @@ coo = 0
 print("Add coordinates of the new element")
 
 for x in range(data.shape[1]):
+    
     coo = raw_input("Enter float for " + str(x + 1) + ". coordinate: ")
     if coo == "":
         coo = 0
