@@ -16,7 +16,7 @@ def k_means(data, k):
     for x in range(means.shape[0]):
         means[x, :] = data[indices[x], :]
 
-    while(not np.array_equal(means, prev)):
+    while not np.array_equal(means, prev):
 
         prev = means
 
@@ -145,7 +145,7 @@ def interact():
     k_m = 0
     k_n = 10000
 
-    while(k_m < 1 or k_m > data.shape[0]):
+    while k_m < 1 or k_m > data.shape[0]:
 
         k_m = raw_input("Input number of k-means: ")
         k_m = int(k_m)
@@ -157,8 +157,9 @@ def interact():
     means, new_classes = k_means(data, k_m)
 
     if k_m == 3:
-        mappings, coded_classes, matches = k_means_test(data, means, new_classes,
-                                               org_classes)
+        mappings, coded_classes, matches = k_means_test(data, means,
+                                                        new_classes,
+                                                        org_classes)
         data_writer.write_tests('out.data', "K-means", k_m, data,
                                 coded_classes, org_classes, matches)
         print("Output of k-Means with test written to out.data file")
@@ -166,7 +167,7 @@ def interact():
         data_writer.write_data('out.data', "K-means", k_m, data, new_classes)
         print("Output of k-Means written to out.data file")
 
-    while(k_n >= data.shape[0]):
+    while k_n >= data.shape[0]:
 
         k_n = raw_input("Input number of k-NN: ")
         k_n = int(k_n)
